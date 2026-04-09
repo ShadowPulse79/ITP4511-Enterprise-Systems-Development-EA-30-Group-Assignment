@@ -106,7 +106,7 @@ CREATE TABLE walkinQueues (
 CREATE TABLE notifications (
     id INT PRIMARY KEY AUTO_INCREMENT,
     userId INT NOT NULL,
-    --'1=预约确认,2=预约改期,3=预约取消,4=预约提醒,5=排队叫号,6=排队跳过,7=排队完成,8=缺席警告',
+    -- '1=预约确认,2=预约改期,3=预约取消,4=预约提醒,5=排队叫号,6=排队跳过,7=排队完成,8=缺席警告',
     type INT NOT NULL COMMENT '1=预约确认,2=预约改期,3=预约取消,4=预约提醒,5=排队叫号,6=排队跳过,7=排队完成,8=缺席警告',
     title VARCHAR(200) NOT NULL,
     message TEXT NOT NULL,
