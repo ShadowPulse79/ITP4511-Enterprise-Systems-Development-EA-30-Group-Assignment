@@ -11,6 +11,8 @@ public class UserService {
      */
 
     public User login(String password,String username){
+        System.out.println("1. 输入的用户名: [" + username + "]");
+        System.out.println("2. 输入的密码: [" + password + "]");
         if(username == null || password == null){
             return null;
         }
@@ -20,6 +22,9 @@ public class UserService {
         if(user == null){
             return null;
         }
+        System.out.println("3. 用户存在, ID: " + user.getId());
+        System.out.println("4. 数据库中的密码: [" + user.getPassword() + "]");
+        System.out.println("5. 密码是否匹配: " + password.equals(user.getPassword()));
         if(!password.equals(user.getPassword())){
             return null;
         }

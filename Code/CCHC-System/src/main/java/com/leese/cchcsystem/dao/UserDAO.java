@@ -7,7 +7,7 @@ import java.sql.*;
 
 public class UserDAO {
     public User findByUsername(String username){
-        String sql = "select * form users where username = ?";
+        String sql = "select * from users where username = ?";
 
         try(Connection conn = DBUtil.getConnection();
             //创建一个预编译的 SQL 语句执行器
@@ -24,7 +24,7 @@ public class UserDAO {
     }
 
     public User findById(int id){
-        String sql = "select * form users where id = ?";
+        String sql = "select * from users where id = ?";
         try(Connection conn = DBUtil.getConnection();
             //创建一个预编译的 SQL 语句执行器
             PreparedStatement ps = conn.prepareStatement(sql)){
@@ -93,7 +93,7 @@ public class UserDAO {
     }
 
     public boolean updatePassword(int userId,String newP){
-        String sql = "update users set password =? where userId=?";
+        String sql = "update users set password =? where id=?";
         try (Connection conn = DBUtil.getConnection();
              PreparedStatement ps = conn.prepareStatement(sql)) {
 
