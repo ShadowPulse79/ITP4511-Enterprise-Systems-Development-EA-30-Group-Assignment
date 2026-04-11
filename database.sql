@@ -117,3 +117,15 @@ CREATE TABLE notifications (
     FOREIGN KEY (userId) REFERENCES users(id),
     INDEX idx_user_read (userId, isRead)
 );
+
+-- 管理员 (role = 3)
+INSERT INTO users (username, password, fullName, email, phone, role, clinicId, isActive) VALUES
+('admin', 'password', '系统管理员', 'admin@cchc.com', '123456', 3, NULL, TRUE);
+
+-- 诊所员工 (role = 2) - 分别属于5个不同的诊所
+INSERT INTO users (username, password, fullName, email, phone, role, clinicId, isActive) VALUES
+('staff', 'password', '陈医生', 'staff.cw@cchc.com', '23456789', 2, 1, TRUE);
+
+-- 患者 (role = 1)
+INSERT INTO users (username, password, fullName, email, phone, role, clinicId, isActive) VALUES
+('patient', 'password', '张三', 'patient@example.com', '91234567', 1, NULL, TRUE);
