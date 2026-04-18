@@ -28,6 +28,13 @@ public class UserService {
         if(!password.equals(user.getPassword())){
             return null;
         }
+
+        // 检查用户是否被禁用（isActive == false）
+        if (!user.isActive()) {
+            System.out.println("6. 登录失败：该账号已被管理员禁用");
+            return null; 
+        }
+
         user.setPassword(null);
         return user;
     }
@@ -44,6 +51,19 @@ public class UserService {
         }
         user.setRole(1);//默认患者
         user.setActive(true);
+        return userDAO.createUser(user);
+    }
+
+    /**
+     * 管理员创建用户（保留角色和状态）
+     */
+    public boolean adminCreateUser(User user){
+        if(user == null || user.getPassword()== null || user.getUsername() ==null ||user.getFullName()==null ){
+            return false;
+        }
+        if(user.getPassword().length()<4){
+            return false;
+        }
         return userDAO.createUser(user);
     }
 
@@ -74,5 +94,13 @@ public class UserService {
             return false;
         }
         return userDAO.updatePassword(id, newP);
+    }
+
+    public java.util.List<User> getAllUsers() {
+        return userDAO.getAllUsers();
+    }
+
+    public boolean deleteUser(int id) {
+        return userDAO.deleteUser(id);
     }
 }

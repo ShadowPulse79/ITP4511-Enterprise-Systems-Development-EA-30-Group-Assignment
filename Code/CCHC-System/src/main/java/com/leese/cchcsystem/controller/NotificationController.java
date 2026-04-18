@@ -3,6 +3,7 @@ package com.leese.cchcsystem.controller;
 import com.leese.cchcsystem.model.entity.Notification;
 import com.leese.cchcsystem.service.NotificationService;
 import jakarta.servlet.ServletException;
+import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
@@ -12,6 +13,13 @@ import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.List;
 
+@WebServlet({
+        "/notification/list",
+        "/notification/count",
+        "/notification/markRead",
+        "/notification/markAllRead",
+        "/notification/delete"
+})
 public class NotificationController extends HttpServlet {
     private NotificationService notificationService = new NotificationService();
 

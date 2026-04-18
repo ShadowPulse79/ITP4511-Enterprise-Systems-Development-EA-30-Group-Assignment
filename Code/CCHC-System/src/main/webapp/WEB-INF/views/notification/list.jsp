@@ -5,6 +5,15 @@
   List<Notification> notifications = (List<Notification>) request.getAttribute("notifications");
   Integer unreadCount = (Integer) request.getAttribute("unreadCount");
   if (unreadCount == null) unreadCount = 0;
+
+  // 根据 session 中的 role 动态生成返回首页的链接
+  Integer roleId = (Integer) session.getAttribute("role");
+  String dashboardUrl = request.getContextPath() + "/user/login";
+  if (roleId != null) {
+      if (roleId == 1) dashboardUrl = request.getContextPath() + "/patient/dashboard";
+      else if (roleId == 2) dashboardUrl = request.getContextPath() + "/staff/dashboard";
+      else if (roleId == 3) dashboardUrl = request.getContextPath() + "/admin/dashboard";
+  }
 %>
 <!DOCTYPE html>
 <html>
@@ -39,7 +48,7 @@
 <div class="container">
   <div class="header">
     <h2>🔔 我的通知</h2>
-    <a href="${pageContext.request.contextPath}/user/profile">← 返回个人中心</a>
+    <a href="<%= dashboardUrl %>">← 返回首页</a>
   </div>
 
   <div class="stats">
@@ -82,7 +91,7 @@
     %>
   </div>
 
-  <a href="${pageContext.request.contextPath}/user/profile" class="back-link">← 返回个人中心</a>
+  <a href="<%= dashboardUrl %>" class="back-link">← 返回首页</a>
 </div>
 
 <script>
@@ -100,7 +109,11 @@
 
   function deleteNotify(id) {
     if (confirm('确定删除这条通知吗？')) {
-      window.location.href = '${pageContext.request.contextPath}/notification/delete?id=' + id;
+      var form = document.createElement('form');
+      form.method = 'POST';
+      form.action = '${pageContext.request.contextPath}/notification/delete?id=' + id;
+      document.body.appendChild(form);
+      form.submit();
     }
   }
 </script>

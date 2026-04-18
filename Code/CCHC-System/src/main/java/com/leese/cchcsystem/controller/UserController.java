@@ -224,9 +224,9 @@ public class UserController extends HttpServlet {
     //路径稍后记得更改
     private String getDashboardUrl(int role) {
         switch (role) {
-            case 1: return "/patient/dashboard.jsp";
-            case 2: return "/staff/dashboard.jsp";
-            case 3: return "/admin/dashboard.jsp";
+            case 1: return "/patient/dashboard";
+            case 2: return "/staff/dashboard";
+            case 3: return "/admin/dashboard";
             default: return "/user/login";
         }
     }
