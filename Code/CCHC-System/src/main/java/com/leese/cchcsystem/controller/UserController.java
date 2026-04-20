@@ -61,12 +61,12 @@ public class UserController extends HttpServlet {
 
     private void showLoginPage(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        request.getRequestDispatcher("/WEB-INF/views/login.jsp").forward(request, response);
+        request.getRequestDispatcher("/WEB-INF/views/common/login.jsp").forward(request, response);
     }
 
     private void showRegisterPage(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        request.getRequestDispatcher("/WEB-INF/views/register.jsp").forward(request, response);
+        request.getRequestDispatcher("/WEB-INF/views/common/register.jsp").forward(request, response);
     }
 
     private void showProfilePage(HttpServletRequest request, HttpServletResponse response)
@@ -104,7 +104,7 @@ public class UserController extends HttpServlet {
 
         if (user == null) {
             request.setAttribute("error", "用户名或密码错误，或账号已被禁用");
-            request.getRequestDispatcher("/WEB-INF/views/login.jsp").forward(request, response);
+            request.getRequestDispatcher("/WEB-INF/views/common/login.jsp").forward(request, response);
         } else {
             HttpSession session = request.getSession();
             session.setAttribute("userId", user.getId());
@@ -131,7 +131,7 @@ public class UserController extends HttpServlet {
         // 校验密码一致
         if (!password.equals(confirmPassword)) {
             request.setAttribute("error", "两次输入的密码不一致");
-            request.getRequestDispatcher("/WEB-INF/views/register.jsp").forward(request, response);
+            request.getRequestDispatcher("/WEB-INF/views/common/register.jsp").forward(request, response);
             return;
         }
 
@@ -146,10 +146,10 @@ public class UserController extends HttpServlet {
 
         if (success) {
             request.setAttribute("message", "注册成功，请登录");
-            request.getRequestDispatcher("/WEB-INF/views/login.jsp").forward(request, response);
+            request.getRequestDispatcher("/WEB-INF/views/common/login.jsp").forward(request, response);
         } else {
             request.setAttribute("error", "注册失败，用户名可能已存在或密码长度不足4位");
-            request.getRequestDispatcher("/WEB-INF/views/register.jsp").forward(request, response);
+            request.getRequestDispatcher("/WEB-INF/views/common/register.jsp").forward(request, response);
         }
     }
 
@@ -214,7 +214,7 @@ public class UserController extends HttpServlet {
         if (success) {
             request.setAttribute("pwdMessage", "密码修改成功，请重新登录");
             session.invalidate();
-            request.getRequestDispatcher("/WEB-INF/views/login.jsp").forward(request, response);
+            request.getRequestDispatcher("/WEB-INF/views/common/login.jsp").forward(request, response);
         } else {
             request.setAttribute("pwdError", "原密码错误或新密码长度不足4位");
             showProfilePage(request, response);

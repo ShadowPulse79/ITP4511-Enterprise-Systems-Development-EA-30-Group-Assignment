@@ -137,6 +137,37 @@
                 hideError('confirmError');
             }
         });
+        // 輔助函數
+        function showError(errorId) {
+            document.getElementById(errorId).classList.add('show');
+        }
+
+        function hideError(errorId) {
+            document.getElementById(errorId).classList.remove('show');
+        }
+
+        function hideAllErrors() {
+            const errors = document.querySelectorAll('.error-text');
+            errors.forEach(error => error.classList.remove('show'));
+        }
+
+        function isValidEmail(email) {
+            const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+            return emailRegex.test(email);
+        }
+
+        function isValidPhone(phone) {
+            const phoneRegex = /^[5-9]\d{7}$/;
+            return phoneRegex.test(phone);
+        }
+
+        // 3秒後自動隱藏訊息
+        setTimeout(function() {
+            const errorMsg = document.getElementById('errorMsg');
+            const successMsg = document.getElementById('successMsg');
+            if (errorMsg) errorMsg.style.display = 'none';
+            if (successMsg) successMsg.style.display = 'none';
+        }, 3000);
     </script>
 </body>
 </html>
