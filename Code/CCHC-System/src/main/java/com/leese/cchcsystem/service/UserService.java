@@ -68,10 +68,10 @@ public class UserService {
     }
 
     /**
-     * 更新用户数据
+     * 更新用户基本信息（仅 fullName / email / phone）
      */
     public boolean updateInfo(User user){
-        return userDAO.updateUser(user);
+        return userDAO.updateBasicInfo(user);
     }
 
     public User getUserById(int id){

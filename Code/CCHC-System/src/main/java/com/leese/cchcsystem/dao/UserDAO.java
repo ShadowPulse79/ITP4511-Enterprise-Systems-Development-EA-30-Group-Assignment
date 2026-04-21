@@ -70,6 +70,24 @@ public class UserDAO {
         return false;
     }
 
+    /**
+     * 只更新用户基本信息（fullName/email/phone），不修改角色、诊所、状态
+     */
+    public boolean updateBasicInfo(User user) {
+        String sql = "UPDATE users SET fullName = ?, email = ?, phone = ? WHERE id = ?";
+        try (Connection conn = DBUtil.getConnection();
+             PreparedStatement ps = conn.prepareStatement(sql)) {
+            ps.setString(1, user.getFullName());
+            ps.setString(2, user.getEmail());
+            ps.setString(3, user.getPhone());
+            ps.setInt(4, user.getId());
+            return ps.executeUpdate() > 0;
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return false;
+    }
+
     public boolean updateUser(User user){
         String sql = "UPDATE users SET fullName = ?, email = ?, phone = ?, role = ?, " +
                 "clinicId = ?, isActive = ? WHERE id = ?";
