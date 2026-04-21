@@ -199,6 +199,11 @@
                 <% } %>
             </div>
         </div>
+          <div class="feature-card" onclick="location.href='${pageContext.request.contextPath}/user/profile'">
+            <div class="feature-icon">👤</div>
+            <div class="feature-title">个人资料</div>
+            <div class="feature-desc">查看和修改个人信息</div>
+        </div>
     </div>
 </div>
 
