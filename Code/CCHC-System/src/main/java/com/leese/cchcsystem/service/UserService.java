@@ -74,6 +74,14 @@ public class UserService {
         return userDAO.updateBasicInfo(user);
     }
 
+    /**
+     * 管理员更新用户所有信息（包含角色、状态等）
+     */
+    public boolean adminUpdateUser(User user){
+        return userDAO.updateUser(user);
+    }
+
+
     public User getUserById(int id){
         return userDAO.findById(id);
     }

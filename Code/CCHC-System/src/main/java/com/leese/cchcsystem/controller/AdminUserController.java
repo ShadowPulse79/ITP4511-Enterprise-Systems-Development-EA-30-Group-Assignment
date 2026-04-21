@@ -124,7 +124,7 @@ public class AdminUserController extends HttpServlet {
 
             user.setActive(request.getParameter("isActive") != null);
 
-            userService.updateInfo(user);
+            userService.adminUpdateUser(user);
         }
         response.sendRedirect(request.getContextPath() + "/admin/users");
     }
