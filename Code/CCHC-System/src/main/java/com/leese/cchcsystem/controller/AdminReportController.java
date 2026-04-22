@@ -31,7 +31,12 @@ public class AdminReportController extends HttpServlet {
         String path = request.getServletPath();
         String monthYear = request.getParameter("monthYear"); // e.g. "2026-04"
 
+        // 为所有报表页面提供筛选基础数据
+        request.setAttribute("clinics", reportService.getAllClinics());
+        request.setAttribute("services", reportService.getAllServices());
+
         if ("/admin/reports".equals(path)) {
+
             request.getRequestDispatcher("/WEB-INF/views/admin/report_dashboard.jsp").forward(request, response);
         } else if ("/admin/reports/appointments".equals(path)) {
             String clinicIdStr = request.getParameter("clinicId");

@@ -20,17 +20,6 @@ CREATE TABLE users (
 );
 
 
--- =====================================================
--- 表2: clinics（诊所表）
--- =====================================================
-CREATE TABLE clinics (
-    id INT PRIMARY KEY AUTO_INCREMENT,
-    name VARCHAR(100) NOT NULL,
-    location VARCHAR(200),
-    walkInEnabled BOOLEAN DEFAULT TRUE,
-    serviceQuota TEXT NULL COMMENT 'JSON格式: {"1":5, "2":3}',
-    createdAt TIMESTAMP DEFAULT CURRENT_TIMESTAMP
-);
 
 
 -- =====================================================
@@ -45,20 +34,34 @@ CREATE TABLE services (
 
 
 -- =====================================================
--- 表4: clinicSchedules（诊所日程表）
+-- 表1: clinics（诊所表）
+-- 功能：存储诊所的基本信息，用于诊所管理
+-- =====================================================
+CREATE TABLE clinics (
+    id INT PRIMARY KEY AUTO_INCREMENT COMMENT '诊所ID，主键',
+    name VARCHAR(100) NOT NULL COMMENT '诊所名称，如：柴湾诊所',
+    location VARCHAR(200) COMMENT '诊所地址/位置',
+    walkInEnabled BOOLEAN DEFAULT TRUE COMMENT '是否接受现场排队，TRUE=可walk-in，FALSE=仅限预约',
+    serviceQuota TEXT NULL COMMENT '【预留字段】JSON格式服务配额，如{"1":20,"2":10}，建议改用clinicSchedules.maxQuota',
+    createdAt TIMESTAMP DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间'
+) COMMENT='诊所基本信息表 - 用于诊所管理功能';
+
+
+-- =====================================================
+-- 表2: clinicSchedules（诊所日程表）
+-- 功能：存储诊所的营业时间、服务时段、容量配额，用于营业时间和容量规则配置
 -- =====================================================
 CREATE TABLE clinicSchedules (
-    id INT PRIMARY KEY AUTO_INCREMENT,
-    clinicId INT NOT NULL,
-    serviceId INT NOT NULL,
-    slotDate DATE NOT NULL,
-    startTime TIME NOT NULL,
-    endTime TIME NOT NULL,
-    maxQuota INT DEFAULT 5,
-    isAvailable BOOLEAN DEFAULT TRUE,
-    UNIQUE KEY uk_schedule (clinicId, serviceId, slotDate, startTime)
-);
-
+    id INT PRIMARY KEY AUTO_INCREMENT COMMENT '时段ID，主键',
+    clinicId INT NOT NULL COMMENT '所属诊所ID，关联clinics.id',
+    serviceId INT NOT NULL COMMENT '服务ID，关联services.id',
+    slotDate DATE NOT NULL COMMENT '营业日期，如：2026-04-23',
+    startTime TIME NOT NULL COMMENT '时段开始时间，如：09:00:00',
+    endTime TIME NOT NULL COMMENT '时段结束时间，如：12:00:00',
+    maxQuota INT DEFAULT 5 COMMENT '该时段最大预约配额（容量规则），如：最多10人',
+    isAvailable BOOLEAN DEFAULT TRUE COMMENT '该时段是否可用，FALSE表示临时关闭（如医生请假）',
+    UNIQUE KEY uk_schedule (clinicId, serviceId, slotDate, startTime) COMMENT '唯一约束：同一诊所同一服务同一天同一时段不能重复'
+) COMMENT='诊所时段配额表 - 用于营业时间配置和容量规则配置';
 
 -- =====================================================
 -- 表5: appointments（预约表）

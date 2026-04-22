@@ -12,7 +12,7 @@
 <body>
     <div class="admin-container">
         <header class="page-header">
-            <div>
+            <div class="animate-fade-in">
                 <h1 class="page-title">User Management</h1>
                 <p style="color: var(--text-muted); margin-top: 0.5rem;">Manage system access and roles for all users.</p>
             </div>
@@ -20,14 +20,14 @@
                 <a href="${pageContext.request.contextPath}/admin/dashboard" class="btn btn-outline">Back to Dashboard</a>
                 <a href="${pageContext.request.contextPath}/admin/user/create" class="btn btn-primary">
                     <svg style="width: 1.25rem; height: 1.25rem; margin-right: 0.5rem;" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="12 4v16m8-8H4"></path>
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"></path>
                     </svg>
                     Create New User
                 </a>
             </div>
         </header>
 
-        <div class="card">
+        <div class="card animate-fade-in" style="animation-delay: 0.1s;">
             <div class="table-responsive">
                 <table class="custom-table">
                     <thead>

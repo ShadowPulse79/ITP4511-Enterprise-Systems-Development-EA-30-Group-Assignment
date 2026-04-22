@@ -146,4 +146,50 @@ public class ReportDAO {
         }
         return result;
     }
+
+    public List<Map<String, Object>> getAllClinics() {
+        List<Map<String, Object>> clinics = new ArrayList<>();
+        String sql = "SELECT id, name FROM clinics ORDER BY name";
+        try (Connection conn = DBUtil.getConnection();
+             PreparedStatement ps = conn.prepareStatement(sql)) {
+            ResultSet rs = ps.executeQuery();
+            while (rs.next()) {
+                Map<String, Object> clinic = new HashMap<>();
+                clinic.put("id", rs.getInt("id"));
+                clinic.put("name", rs.getString("name"));
+                clinics.add(clinic);
+            }
+        } catch (SQLException e) { e.printStackTrace(); }
+        return clinics;
+    }
+
+    public List<Map<String, Object>> getAllServices() {
+        List<Map<String, Object>> services = new ArrayList<>();
+        String sql = "SELECT id, name FROM services ORDER BY name";
+        try (Connection conn = DBUtil.getConnection();
+             PreparedStatement ps = conn.prepareStatement(sql)) {
+            ResultSet rs = ps.executeQuery();
+            while (rs.next()) {
+                Map<String, Object> service = new HashMap<>();
+                service.put("id", rs.getInt("id"));
+                service.put("name", rs.getString("name"));
+                services.add(service);
+            }
+        } catch (SQLException e) { e.printStackTrace(); }
+        return services;
+    }
+
+    public int getTodayBookingCount() {
+        String sql = "SELECT COUNT(*) FROM appointments WHERE appointmentDate = CURRENT_DATE";
+        try (Connection conn = DBUtil.getConnection();
+             PreparedStatement ps = conn.prepareStatement(sql)) {
+            ResultSet rs = ps.executeQuery();
+            if (rs.next()) {
+                return rs.getInt(1);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return 0;
+    }
 }

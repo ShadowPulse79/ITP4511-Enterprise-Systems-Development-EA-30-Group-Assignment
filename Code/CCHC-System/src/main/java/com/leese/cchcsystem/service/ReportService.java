@@ -18,4 +18,17 @@ public class ReportService {
     public List<Map<String, Object>> getNoShowSummary(String monthYear) {
         return reportDAO.getNoShowSummary(monthYear);
     }
+
+    public List<Map<String, Object>> getAllClinics() {
+        return reportDAO.getAllClinics();
+    }
+
+    public List<Map<String, Object>> getAllServices() {
+        return reportDAO.getAllServices();
+    }
+
+    public int getTodayBookingCount() {
+        return reportDAO.getTodayBookingCount();
+    }
 }
+
