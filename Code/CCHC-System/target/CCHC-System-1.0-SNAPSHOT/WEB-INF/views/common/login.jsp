@@ -322,9 +322,9 @@
                     </div>
                 </div>
 
-                <div class="form-footer">
-                    <a href="#">忘記密碼？</a>
-                </div>
+<%--                <div class="form-footer">--%>
+<%--                    <a href="#">忘記密碼？</a>--%>
+<%--                </div>--%>
 
                 <button type="submit" class="btn-primary">登 入</button>
             </form>

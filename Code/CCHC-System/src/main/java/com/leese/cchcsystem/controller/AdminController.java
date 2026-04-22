@@ -1,5 +1,7 @@
 package com.leese.cchcsystem.controller;
 
+import com.leese.cchcsystem.service.ClinicService;
+import com.leese.cchcsystem.service.ReportService;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
@@ -11,6 +13,9 @@ import java.io.IOException;
 
 @WebServlet("/admin/dashboard")
 public class AdminController extends HttpServlet {
+
+    private ReportService reportService = new ReportService();
+    private ClinicService clinicService = new ClinicService();
 
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
@@ -29,9 +34,16 @@ public class AdminController extends HttpServlet {
             return;
         }
 
+        // 获取实时数据
+        int todayBookings = reportService.getTodayBookingCount();
+        int clinicCount = clinicService.getClinicCount();
+
+        request.setAttribute("todayBookings", todayBookings);
+        request.setAttribute("clinicCount", clinicCount);
+
         request.getRequestDispatcher("/WEB-INF/admin/dashboard.jsp").forward(request, response);
     }
-
+  
     private String getDashboardUrl(int role) {
         switch (role) {
             case 1: return "/patient/dashboard";
