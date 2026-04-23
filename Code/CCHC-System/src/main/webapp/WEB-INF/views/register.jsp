@@ -41,7 +41,7 @@
 <%--        </div>--%>
 <%--        <div class="form-group">--%>
 <%--            <label>邮箱</label>--%>
-<%--            <input type="email" name="email">--%>
+<%--            <input type="email" name="email">-%>
 <%--        </div>--%>
 <%--        <div class="form-group">--%>
 <%--            <label>手机号码</label>--%>

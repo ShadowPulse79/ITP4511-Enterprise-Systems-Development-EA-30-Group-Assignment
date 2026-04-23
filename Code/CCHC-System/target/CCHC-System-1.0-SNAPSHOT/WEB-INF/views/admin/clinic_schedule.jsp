@@ -53,7 +53,10 @@
         <header class="page-header">
             <div>
                 <h1 class="page-title">${clinic.name} - Scheduling</h1>
-                <p style="color: var(--text-muted); margin-top: 0.5rem;">Configure service slots and capacity for <strong>${selectedDate}</strong>.</p>
+                <p style="color: var(--text-muted); margin-top: 0.5rem; display: flex; align-items: center; gap: 0.5rem;">
+                    <span class="badge" style="background: #ecfdf5; color: #065f46; border: 1px solid #a7f3d0; font-size: 0.7rem;">Simplified Mode</span>
+                    AM/PM service structure for <strong>${selectedDate}</strong>.
+                </p>
             </div>
             <a href="${pageContext.request.contextPath}/admin/clinics" class="btn btn-outline">Back to Clinics</a>
         </header>
@@ -83,27 +86,60 @@
         </c:if>
 
         <c:if test="${not empty schedules}">
-            <div class="schedule-grid">
-                <c:forEach var="s" items="${schedules}">
+            <div class="animate-fade-in" style="animation-delay: 0.3s;">
+                <c:set var="currentService" value="" />
+                <c:forEach var="s" items="${schedules}" varStatus="status">
+                    <c:if test="${s.serviceName != currentService}">
+                        <c:if test="${not empty currentService}">
+                                </div> <!-- Close previous grid -->
+                            </div> <!-- Close previous group -->
+                        </c:if>
+                        <c:set var="currentService" value="${s.serviceName}" />
+                        <div class="service-section" style="margin-bottom: 2.5rem;">
+                            <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 1rem; padding-bottom: 0.5rem; border-bottom: 1px solid var(--border-color);">
+                                <h3 style="margin: 0; font-size: 1.125rem; font-weight: 700; color: var(--primary-color); display: flex; align-items: center; gap: 0.75rem;">
+                                    <span style="display: inline-block; width: 4px; height: 1.25rem; background: var(--primary-color); border-radius: 2px;"></span>
+                                    ${s.serviceName}
+                                </h3>
+                                <span style="font-size: 0.75rem; color: var(--text-muted); font-weight: 500; text-transform: uppercase; letter-spacing: 0.05em;">Service Blocks</span>
+                            </div>
+                            <div class="schedule-grid" style="grid-template-columns: repeat(2, 1fr); max-width: 900px; margin-top: 1rem;">
+                    </c:if>
+                    
                     <div class="slot-card" onclick="openEditModal('${s.id}', '${s.serviceName}', '${s.startTime}', '${s.endTime}', '${s.maxQuota}', ${s.available})">
-                        <div style="font-size: 0.75rem; color: var(--text-muted); text-transform: uppercase; margin-bottom: 0.25rem;">
-                            ${s.serviceName}
-                        </div>
-                        <div style="font-size: 1.125rem; font-weight: 700; color: var(--text-main);">
-                            ${s.startTime} - ${s.endTime}
-                        </div>
-                        <div style="margin-top: 1rem; display: flex; justify-content: space-between; align-items: center;">
-                            <span class="badge badge-info">Quota: ${s.maxQuota}</span>
+                        <div style="display: flex; justify-content: space-between; align-items: start; margin-bottom: 0.5rem;">
                             <c:choose>
-                                <c:when test="${s.available}">
-                                    <span style="color: var(--success-color); font-size: 0.75rem; font-weight: 600;">● Available</span>
+                                <c:when test="${s.startTime.toString().startsWith('09')}">
+                                    <span class="badge" style="background: #f0f9ff; color: #0369a1; border: 1px solid #bae6fd; font-weight: 700;">AM SESSION</span>
                                 </c:when>
                                 <c:otherwise>
-                                    <span style="color: var(--danger-color); font-size: 0.75rem; font-weight: 600;">● Unavailable</span>
+                                    <span class="badge" style="background: #fffbeb; color: #92400e; border: 1px solid #fde68a; font-weight: 700;">PM SESSION</span>
+                                </c:otherwise>
+                            </c:choose>
+                        </div>
+                        <div style="font-size: 1.25rem; font-weight: 800; color: var(--text-main); letter-spacing: -0.02em;">
+                            ${s.startTime.toString().substring(0, 5)} - ${s.endTime.toString().substring(0, 5)}
+                        </div>
+                        <div style="margin-top: 1.25rem; display: flex; justify-content: space-between; align-items: center; padding-top: 0.75rem; border-top: 1px dashed var(--border-color);">
+                            <span style="font-size: 0.8125rem; color: var(--text-muted);">Quota: <strong>${s.maxQuota}</strong></span>
+                            <c:choose>
+                                <c:when test="${s.available}">
+                                    <span style="color: var(--success-color); font-size: 0.75rem; font-weight: 700; display: flex; align-items: center; gap: 0.25rem;">
+                                        <span style="width: 6px; height: 6px; background: var(--success-color); border-radius: 50%;"></span> ACTIVE
+                                    </span>
+                                </c:when>
+                                <c:otherwise>
+                                    <span style="color: var(--danger-color); font-size: 0.75rem; font-weight: 700; display: flex; align-items: center; gap: 0.25rem;">
+                                        <span style="width: 6px; height: 6px; background: var(--danger-color); border-radius: 50%;"></span> DISABLED
+                                    </span>
                                 </c:otherwise>
                             </c:choose>
                         </div>
                     </div>
+                    <c:if test="${status.last}">
+                            </div> <!-- Close last grid -->
+                        </div> <!-- Close last group -->
+                    </c:if>
                 </c:forEach>
             </div>
         </c:if>

@@ -14,7 +14,7 @@ public class ScheduleDAO {
                      "JOIN clinics c ON cs.clinicId = c.id " +
                      "JOIN services s ON cs.serviceId = s.id " +
                      "WHERE cs.clinicId = ? AND cs.slotDate BETWEEN ? AND ? " +
-                     "ORDER BY cs.slotDate ASC, cs.startTime ASC";
+                     "ORDER BY s.name ASC, cs.startTime ASC";
         try (Connection conn = DBUtil.getConnection();
              PreparedStatement ps = conn.prepareStatement(sql)) {
             ps.setInt(1, clinicId);
